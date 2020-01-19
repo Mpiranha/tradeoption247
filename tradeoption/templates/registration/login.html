@@ -1,0 +1,113 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="{% static 'tradeoption/css/bootstrap.min.css'%}">
+    <!-- <link rel="stylesheet" href="{% static 'tradeoption/css/font-awesome.min.css'%}"> -->
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/all.css"
+        integrity="sha384-B4dIYHKNBt8Bc12p+WXckhzcICo0wtJAoU8YZTY5qE0Id1GSseTk6S+L3BlXeVIU" crossorigin="anonymous">
+    <link rel="stylesheet" href="{% static 'tradeoption/css/main.css'%}">
+    <link rel="stylesheet" href="{% static 'tradeoption/css/media-queries.css'%}">
+    <link rel="icon" href="{% static 'tradeoption/img/logo.png'%}">
+    <title>Sign In</title>
+</head>
+
+<body>
+    <div class="loader">
+        <img src="{% static 'tradeoption/img/loader.gif'%}" alt="loader icon">
+    </div>
+    <div class="container-fluid no-gutter">
+        <nav class="navbar navbar-expand-sm sticky-top navbar-light bg-dark">
+            <div class="d-flex">
+                <a class="navbar-brand logo-link mr-1" href="#">
+                    <img class="main-logo" src="{% static 'tradeoption/img/logo.png'%}" alt="logo">
+                </a>
+                <h1 class="logo-caption">
+                    An Innovative <br> trading platform
+                </h1>
+            </div>
+
+            <div class="d-flex ml-auto sign-btn">
+                <a name="" id="" class="btn bg-main mr-2" href="/login" role="button">Sign in</a>
+                <a name="" id="" class="btn" href="/register" role="button">Sign Up</a>
+            </div>
+            <!-- <button class="navbar-toggler d-lg-none" type="button" data-toggle="collapse" data-target="#collapsibleNavId" aria-controls="collapsibleNavId"
+                aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button> -->
+            <!-- <div class="collapse navbar-collapse" id="collapsibleNavId">
+                <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
+                    <li class="nav-item active">
+                        <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">Link</a>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="dropdownId" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Dropdown</a>
+                        <div class="dropdown-menu" aria-labelledby="dropdownId">
+                            <a class="dropdown-item" href="#">Action 1</a>
+                            <a class="dropdown-item" href="#">Action 2</a>
+                        </div>
+                    </li>
+                </ul>
+                <form class="form-inline my-2 my-lg-0">
+                    <input class="form-control mr-sm-2" type="text" placeholder="Search">
+                    <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+                </form>
+            </div> -->
+        </nav>
+
+        <div class="container-fluid">
+            <div class="row justify-content-center">
+                <div class="col-12 col-md-6 col-lg-4 py-4">
+                    <h1 class="page-title">
+                        Sign In
+                    </h1>
+                    <div class="form-wrap mt-5">
+                        <form class="login-form" method="post">
+                         {% csrf_token %}
+                         {% for error in form.non_field_errors %}
+                             <p style="color: red">{{error}}</p>                 
+                        {% endfor %}
+
+                            <div class="form-group">
+                                <label for="id_username">Username</label>
+                                <input type="text" name="username" autofocus required id="id_username"class="form-control py-4" placeholder="Username" />
+                                
+                                
+                            </div>
+                            <div class="form-group">
+                                <label for="id_password">Password</label>
+                                <input type="password" name="password" required id="id_password" class="form-control py-4" placeholder="Password" />
+                            </div>
+                            {% comment %} <div class="form-check my-4">
+                                <input type="checkbox" class="form-check-input " id="exampleCheck1">
+                                <label class="form-check-label" for="exampleCheck1">Remember Me</label>
+                            </div> {% endcomment %}
+                            <button type="submit" class="btn btn-block btn-submit">Enter</button>
+                        </form>
+                    </div>
+
+                    <div class="text-center">
+                        <a class="d-block mt-3 text-dark" href="{% url 'forgot'%}">Forgot Password</a>
+                        
+                        <a class="d-block mt-3 text-dark" href="{% url 'register'%}">or Create a new Account</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    </div>
+
+    <script src="{% static 'tradeoption/js/jquery-3.4.1.min.js'%}"></script>
+    <script src="{% static 'tradeoption/js/bootstrap.min.js'%}"></script>
+    <script src="{% static 'tradeoption/js/loader.js'%}"></script>
+</body>
+
+</html>

@@ -1,0 +1,396 @@
+@import url('https://fonts.googleapis.com/css?family=Roboto&display=swap');
+
+html {
+  overflow-x: hidden;
+}
+
+.main-logo {
+  width: 30px;
+}
+
+body {
+  font-family: 'Roboto', 'sans-serif', 'Arial';
+}
+
+.no-gutter {
+  padding: 0;
+}
+
+.logo-link {
+  position: relative;
+  padding-right: .5rem;
+}
+
+.review .card-img-top {
+  border-radius: 50%;
+}
+
+.logo-caption {
+  font-size: .6rem;
+  text-align: center;
+  padding: 14px 0 0 0;
+  color: #31b1b7;
+}
+
+.bg-none {
+  background-color: #ffffff00;
+}
+
+.logo-link::after {
+  content: "";
+  width: 2px;
+  height: 25px;
+  background-color: #ffffff;
+  display: block;
+  position: absolute;
+  right: 0;
+  top: 50%;
+  margin-top: -10px;
+  bottom: 50%;
+}
+
+.loader {
+  display: -ms-flexbox;
+  display: flex;
+  position: fixed;
+  height: 100%;
+  width: 100%;
+  background-color: #000000;
+  z-index: 99999;
+  -ms-flex-align: center;
+  align-items: center;
+  -ms-flex-pack: center;
+  justify-content: center;
+}
+
+.loader img {
+  width: 70px;
+  height: 70px;
+}
+
+.bg-main {
+  background-color: #31b1b7;
+}
+
+.sign-btn a {
+  color: #f5f5dc;
+}
+
+.sign-btn a:nth-child(2) {
+  border: 1px solid #31b1b7;
+}
+
+.vid-wrapper {
+  height: 100vh;
+  position: relative;
+}
+
+.embed-responsive {
+  height: 100%;
+}
+
+.vid-wrapper .embed-responsive video {
+  object-fit: cover;
+}
+
+.vid-wrapper .caption {
+  position: absolute;
+  top: 0;
+  left: 0;
+  background-color: #00000091;
+  padding: .5rem 1rem;
+  height: 100%;
+  width: 100%;
+}
+
+.caption-text {
+  font-size: .8rem;
+}
+
+.vip-badge {
+  width: 65px;
+}
+
+.award-text-ctn,
+.n-icon {
+  float: left;
+}
+
+.n-icon {
+  color: #ffffff;
+  font-size: 1.7rem;
+  margin: .8rem 1rem;
+}
+
+.text-caption {
+  color: #928787;
+  font-size: .7rem;
+}
+
+.page-article-content {
+  margin: 3rem 0;
+  color: #ffffff;
+  font-size: .8rem;
+
+}
+
+.vip-label {
+  margin-left: 1rem;
+}
+
+.stretch {
+  width: 200px;
+}
+
+.awards-mobile .awards-mb .awards-item .awards-unit .n-icon {
+  color: #000000;
+}
+
+.awards-mobile .awards-mb .awards-item {
+  margin: 1.2rem 0;
+}
+
+.title-ctn {
+  text-align: center;
+
+}
+
+.title {
+  font-size: 1.5rem;
+  position: relative;
+  color: #ffffff;
+  font-weight: 800;
+  display: inline-block;
+}
+
+.title::after,
+.other-page-title::after {
+  content: "";
+  position: absolute;
+  display: block;
+  width: 50%;
+  height: 3px;
+  background-color: #31b1b7;
+  top: 93%;
+}
+
+.bg-stat {
+  background-color: black;
+}
+
+.stat-wrap {
+  text-align: center;
+  position: relative;
+  padding: 0 .2rem;
+}
+
+.stat-value,
+.stat-caption {
+  color: #ffffff;
+}
+
+.stat-value {
+  font-weight: 700;
+}
+
+.crypto-table,
+.crypto-table-mobile {
+  height: 90vh;
+}
+
+.benefits .card-body .card-title,
+.benefits .card-body .card-text {
+  text-align: center;
+  color: #ffffff;
+}
+
+.simple .card-body .card-title,
+.simple .card-body .card-text {
+  text-align: center;
+  color: #000000;
+}
+
+.benefits .card-body .card-text,
+.simple .card-body .card-text {
+  font-size: .9rem;
+}
+
+.benefits .card-img-top {
+  text-align: center;
+}
+
+.benefits .card-img-top i {
+  font-size: 3.5rem;
+  color: #31b1b7;
+  margin: 50px auto;
+}
+
+.bal-img {
+  height: 70vh;
+}
+
+.circle {
+  min-width: 100px;
+  max-width: 100px;
+  min-height: 100px;
+  max-height: 100px;
+  border-radius: 50%;
+  background-color: #31b1b7;
+  text-align: center;
+}
+
+.simple .card-img-top i {
+  font-size: 3rem;
+  color: #000000;
+  margin: 27px auto;
+}
+
+.move-up {
+  margin-top: -75px;
+}
+
+.simple .card-img-top {
+  display: flex;
+  display: -ms-flexbox;
+  justify-content: center;
+}
+
+.bg-easy {
+  background-image: url(../img/easy-bg.jpg);
+  padding: 5rem 0 7rem 0;
+  background-size: cover;
+  background-repeat: no-repeat;
+
+}
+
+.bg-easy .title {
+  color: #ffffff !important;
+}
+
+/*Login*/
+
+.page-title {
+  text-align: center;
+
+}
+
+.other-page-title {
+  margin-top: 2rem;
+  font-size: 1.8rem;
+}
+
+.about-desc {
+  font-size: 1.3rem;
+}
+
+.login-form .form-group input {
+  background-color: #ffffff !important;
+  border: 1px solid #31b1b7;
+}
+
+.login-form .form-group input:focus {
+  box-shadow: none;
+}
+
+.password-desc,
+.accept-terms {
+  font-size: .8rem;
+}
+
+.accept-wrap label {
+  font-size: .8rem;
+}
+
+.accept-wrap label a {
+  color: #000000;
+  text-decoration: underline;
+}
+
+.desc-list li{
+  font-weight: 100;
+  letter-spacing: 1px;
+  margin-top: 1rem;
+}
+
+.desc-payment-methods li span i{
+  font-size: 2rem;
+  margin-right: .5rem;
+}
+
+.desc-payment-methods li span div {
+  display: inline-block;
+}
+
+.desc-payment-methods li {
+  margin-top: 1.5rem;
+}
+
+.desc-payment-methods li:hover span i {
+  color: #31b1b7;
+}
+
+
+.btn-submit {
+  background-color: #31b1b7;
+  color: #ffffff;
+  padding-top: .8rem;
+  padding-bottom: .8rem;
+}
+
+.desc-text {
+  text-align: justify;
+  letter-spacing: 1px;
+  font-size: .9rem;
+}
+
+.contact-details .detail-title {
+  color: #928787;
+}
+
+#map {
+  height: 100vh;
+}
+
+@media screen and (min-width: 768px) {
+
+  .title {
+    color: #000000;
+  }
+
+  .bg-stat {
+    background-color: #ffffff;
+  }
+
+  .stat-value,
+  .stat-caption {
+    color: #000000;
+  }
+
+  .benefits .card-body .card-title,
+  .benefits .card-body .card-text {
+    color: #000000;
+  }
+
+  .md-bordered {
+    border-left: 1px solid #000000;
+  }
+}
+
+@media screen and (min-width: 1024px) {
+  .stat-wrap::after {
+    content: "";
+    width: 5px;
+    background-color: #31b1b7;
+    height: 60px;
+    display: block;
+    position: absolute;
+    top: 50%;
+    right: 0;
+    margin-top: -30px;
+    border-radius: 4px;
+  }
+
+  .last::after {
+    display: none;
+  }
+}
