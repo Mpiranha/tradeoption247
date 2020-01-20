@@ -7,6 +7,7 @@ class CurrencyCurrencies(Currency):
 
 class Country(models.Model):
     name = models.CharField(max_length=128, unique = True)
+    code = models.CharField(max_length=6, null=True)
 
     def __str__(self):
         return self.name

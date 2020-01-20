@@ -1,0 +1,3 @@
+{% if user.is_authenticated %}
+<h1>{{user.first_name|first}}{{user.last_name|first}}</h1>
+{% endif%}
