@@ -279,8 +279,8 @@ def login_view(request):
 @transaction.atomic
 def register(request):
     if request.user.is_authenticated:
-        return redirect('/trade/tradenow')
-    if request.method == 'POST' and request.POST.get('reg'):
+        return redirect('/trade')
+    if request.method == 'POST' :
         user_form = RegisterForm(request.POST)
         profile_form = TraderForm(request.POST)
         if user_form.is_valid() and profile_form.is_valid():
@@ -289,13 +289,18 @@ def register(request):
             password = user_form.cleaned_data['password1']
             user.set_password(password)
             user.trader = profile_form.save(commit=False)
-            account = stripe.Account.create(
-                country= Country.objects.get(pk=request.POST.get('country_id')).code,
-                type='custom',
-                default_currency= profile_form.cleaned_data['preferred_currency'],
-                email= user_form.cleaned_data['email'],
-                requested_capabilities=['card_payments', 'transfers'],
-            )
+            try:
+                account = stripe.Account.create(
+                    country= Country.objects.get(pk=request.POST.get('country_id')).code,
+                    type='custom',
+                    default_currency= profile_form.cleaned_data['preferred_currency'],
+                    email= user_form.cleaned_data['email'],
+                    requested_capabilities=['card_payments', 'transfers'],
+                )
+
+                
+            except stripe.error.StripeError as e:
+                print(f"error  ====================================>> {e}")
 
             transaction = AccountTransaction(
                         user=user,
