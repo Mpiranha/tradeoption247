@@ -7,9 +7,9 @@ from .forms import RegisterForm, LoginForm,  TraderForm, EditProfileForm, Passwo
 from django.http import HttpResponse, JsonResponse
 from django.db import transaction
 from django.conf import settings
-
+from django.urls import reverse
 import datetime
-
+import requests
 # from django.core.context_processors import csrf
 # Create your views here.
 
@@ -20,8 +20,8 @@ stripe.api_key = settings.STRIPE_SECRET
 
 
 def index(request):
-    if request.user.is_authenticated:
-        return redirect('/trade/tradenow')
+    # if request.user.is_authenticated:
+    #     return redirect('/trade/tradenow')
 
     context = {
         "title": "TradingOption247",
@@ -39,6 +39,7 @@ def accounts(request):
         user_form = EditProfileForm(request.POST, instance=request.user)
         profile_form = TraderForm(request.POST,instance=request.user.trader)
         if user_form.is_valid() and profile_form.is_valid():
+
             user_form = user_form.save()
             profile_form = profile_form.save(False)
             profile_form.user = user_form
@@ -82,7 +83,7 @@ def deposit(request):
         amount = int(request.POST.get("amount").strip(" "))
         print("------------------------------------")
         print(request.POST.get("acc_type").strip(' '), type(request.POST.get("acc_type").strip(' ')))
-        acc_type = int(request.POST.get("acc_type").strip(' '))
+        acc_type = float(request.POST.get("acc_type").strip(' '))
         if(amount < AccountType.objects.filter(a_type=acc_type)[0].price):
 
             args['accounttypes'] = accounttypes
@@ -92,12 +93,30 @@ def deposit(request):
             return render(request, "tradeoption/deposit.html", args)
         else:
             try:
-                stripe.Charge.create(
-                    amount=amount,
-                    currency=request.user.trader.currency.code.lower(),
-                    source= request.POST.get("stripeToken"),
+                customer = stripe.Customer.create(
+                    email = request.POST.get("stripeEmail"),
+                    source = request.POST.get("stripeToken")
+
+                )
+
+                charge = stripe.Charge.create(
+                    customer = customer.id,
+                    amount=amount*100,
+                    currency=request.user.trader.preferred_currency.code.lower(),
                     description= f'{ACCOUNT[acc_type]} investment plan'
                 )
+                print("=============================")
+                if (charge.outcome.seller_message == "Payment complete." and charge.outcome.type == "authorized", charge.refunded == False):
+                    transaction = AccountTransaction.objects.get(user=request.user)
+                    
+                    transaction.description=f'{ACCOUNT[acc_type]} investment plan'
+                       
+                    transaction.save()
+
+                    AccountTransaction.deposit(AccountTransaction.objects.get(user=request.user).id, amount)
+                    return redirect('/trade')
+
+
                 # session = stripe.checkout.Session.create(
                 #     payment_intent_data={ 
                 #         'setup_future_usage': 'off_session',
@@ -106,29 +125,32 @@ def deposit(request):
                 #     # customer = request.user.trader.id,
                 #     payment_method_types=['card'],
                 #     line_items=[{
-                #         'name': ACCOUNT[acc_type],
-                #         'description': f'{ACCOUNT[acc_type]} investment plan',
-                #         'amount': amount*100,
-                #         'currency': request.user.trader.currency.code.lower(),
+                #         'name': 'noth',#ACCOUNT[acc_type],
+                #         'description': "nothing",#f'{ACCOUNT[acc_type]} investment plan',
+                #         'amount': 50000,#amount*100,
+                #         'currency': "usd",#request.user.trader.preferred_currency.code.lower(),
                 #         'quantity': 1,
                 #     }],
-                #     success_url='/accounts',
-                #     cancel_url='/trade',
+                #     success_url= 'https://example.com/success',
+                #     cancel_url= 'https://example.com/cancel',
                 #     )
+                # print("=============================")
+                # print(session)
+                # args['session_id'] = session.id
             except stripe.error.CardError as e:
                 print('e')
         # if form.is_valid():
             
-        #         # customer = stripe.Charge.create(
-        #         #     amount = form.cleaned_data['amount'], 
-        #         #     currency = 'USD',
-        #         #     description = form.cleaned_data['email'],
-        #         # )
-        #         form.save()
-        #         print('\n')
-        #         print(customer)
+                # customer = stripe.Charge.create(
+                #     amount = form.cleaned_data['amount'], 
+                #     currency = 'USD',
+                #     description = form.cleaned_data['email'],
+                # )
+                # form.save()
+                # print('\n')
+                # print(customer)
 
-        #         redirect('/trade')
+                # redirect('/trade')
             
     
     
@@ -136,16 +158,14 @@ def deposit(request):
     # else:
     #     form = DepositForm()
     
-    args = {}
+    
     args['accounttypes'] = accounttypes
     args["accounts"] = ACCOUNT
     # args.update(csrf(request))
-    # args['session_id'] = session.id
+    
     # args['form'] = form
     args['publishable'] = settings.STRIPE_PUBLISHABLE
-    # args['months'] = range(1, 13)
-    # args['years'] = range(2019, 2049)
-    # args['soon'] = datetime.date.today() + datetime.timedelta(days=30)
+    
     return render(request, "tradeoption/deposit.html", args)
 
 @login_required
@@ -174,6 +194,7 @@ def trade(request):
 @login_required
 def trade_now(request):
     msg = request.user.uploadedfile.status
+    print(msg, '------------------------------------------------------------------------------------------')
     if int(msg) <= 1:
         if request.method == 'POST' or request.method == "GET":
             return redirect('/trade')
@@ -181,14 +202,18 @@ def trade_now(request):
     else:
         return render(request, "tradeoption/tradenow.html")
 def csv_temp(request):
+    # from alpha_vantage.foreignexchange import ForeignExchange
     from alpha_vantage.timeseries import TimeSeries
     from alpha_vantage.techindicators import TechIndicators
     key = 'Y60HOLBBWTXXE4V4'
 
-    ts = TimeSeries(key, output_format="json")
+    # url = 'https://www.alphavantage.co/query?function=FX_INTRADAY&from_symbol=EUR&to_symbol=USD&interval=5min&apikey=Y60HOLBBWTXXE4V4'
+    # res = requests.get(url)
+
+    ts = TimeSeries(key, output_format="json")#ForeignExchange(key, output_format="json")
     ti = TechIndicators(key) 
     aapl_data, aapl_meta_data = ts.get_intraday(symbol='AAPL', interval='1min')
-    print(aapl_data)
+    # print(aapl_data)
     return JsonResponse(aapl_data)
 @login_required
 def verify(request):
@@ -254,8 +279,8 @@ def login_view(request):
 @transaction.atomic
 def register(request):
     if request.user.is_authenticated:
-        return redirect('/trade/tradenow')
-    if request.method == 'POST' and request.POST.get('reg'):
+        return redirect('/trade')
+    if request.method == 'POST' :
         user_form = RegisterForm(request.POST)
         profile_form = TraderForm(request.POST)
         if user_form.is_valid() and profile_form.is_valid():
@@ -264,7 +289,25 @@ def register(request):
             password = user_form.cleaned_data['password1']
             user.set_password(password)
             user.trader = profile_form.save(commit=False)
-            
+            try:
+                account = stripe.Account.create(
+                    country= Country.objects.get(pk=request.POST.get('country_id')).code,
+                    type='custom',
+                    default_currency= profile_form.cleaned_data['preferred_currency'],
+                    email= user_form.cleaned_data['email'],
+                    requested_capabilities=['card_payments', 'transfers'],
+                )
+
+                
+            except stripe.error.StripeError as e:
+                print(f"error  ====================================>> {e}")
+
+            transaction = AccountTransaction(
+                        user=user,
+                        currency=profile_form.cleaned_data['preferred_currency'],
+                        stripe_id=account.id,
+                        )
+            transaction.save()
             
             user.save()
             for field in profile_form.changed_data:
@@ -297,7 +340,7 @@ def about(request):
     return render(request, "tradeoption/about.html")
 
 def contact(request):
-    return render(request, "tradeoption/contact.html")
+    return render(request, "tradeoption/index.html/#contact")
 
 def binary_options(request):
     return render(request, "tradeoption/binaryoptions.html")

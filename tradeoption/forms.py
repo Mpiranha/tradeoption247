@@ -26,12 +26,12 @@ class DepositForm(forms.ModelForm):
     #     self._errors[NON_FIELD_ERRORS] = self.error_class([nessaage])
 class RegisterForm(UserCreationForm):
     
-    username = forms.CharField(widget=forms.TextInput(attrs={'class':'form-control', 'placeholder':'Username'}))
-    password1 = forms.CharField(widget=forms.PasswordInput(attrs={'class':'form-control', 'placeholder':'Password'}))
-    password2 = forms.CharField(widget=forms.PasswordInput(attrs={'class':'form-control', 'placeholder':'Password confirmation'}))
-    first_name = forms.CharField(widget=forms.TextInput(attrs={'class':'form-control', 'placeholder':'Firstnane', 'Required':'false'}))
-    last_name = forms.CharField(widget=forms.TextInput(attrs={'class':'form-control', 'placeholder':'Lastname', 'Required':'false'}))
-    email = forms.EmailField(widget=forms.TextInput(attrs={'class':'form-control', 'placeholder':'Email'}))
+    username = forms.CharField(widget=forms.TextInput(attrs={'class':'form-control py-4', 'placeholder':'Username'}))
+    password1 = forms.CharField(widget=forms.PasswordInput(attrs={'class':'form-control py-4', 'placeholder':'Password'}))
+    password2 = forms.CharField(widget=forms.PasswordInput(attrs={'class':'form-control py-4', 'placeholder':'Password confirmation'}))
+    first_name = forms.CharField(widget=forms.TextInput(attrs={'class':'form-control py-4', 'placeholder':'Firstnane', 'Required':'false'}))
+    last_name = forms.CharField(widget=forms.TextInput(attrs={'class':'form-control py-4', 'placeholder':'Lastname', 'Required':'false'}))
+    email = forms.EmailField(widget=forms.TextInput(attrs={'class':'form-control py-4', 'placeholder':'Email', "aria-describedby":"emailHelp"}))
    
     
 
@@ -52,11 +52,11 @@ class RegisterForm(UserCreationForm):
 
 class TraderForm(forms.ModelForm):
 
-    country_id = forms.ModelChoiceField(queryset=Country.objects.all(), initial=0, widget=forms.Select(attrs={'class':'form-control','placeholder':'Country'}))
+    country_id = forms.ModelChoiceField(queryset=Country.objects.all(), initial=1, widget=forms.Select(attrs={'class':'form-control','placeholder':'Country'}))
     # state = forms.CharField(required=False,widget=forms.TextInput(attrs={'class':'form-control', 'placeholder':'State'}))
     # city = forms.CharField(required=False,widget=forms.TextInput(attrs={'class':'form-control','placeholder':'City'}))
     preferred_currency = forms.ModelChoiceField(queryset=Currency.objects.all(),  initial=0, widget=forms.Select(attrs={'class':'form-control', 'placeholder':'Currency'}))
-    phone = forms.IntegerField(required=False,widget=forms.TextInput(attrs={'class':'form-control', 'placeholder':'Phone', 'Required':'false'}))
+    phone = forms.IntegerField(required=False,widget=forms.TextInput(attrs={'class':'form-control py-4', 'placeholder':'Phone'}))
     
     class Meta:
         model = Trader

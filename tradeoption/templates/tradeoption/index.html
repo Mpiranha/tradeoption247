@@ -153,7 +153,7 @@
                                 platform.
                             </p>
                             <div class="btn-holder">
-                                <a href="sign-up.html" class="btn bg-main btn-lg stretch text-light">Try
+                                <a href="{% url 'register'%}" class="btn bg-main btn-lg stretch text-light">Try
                                     it</a>
                             </div>
                         </div>
@@ -240,10 +240,12 @@
                         <p class="stat-caption">Countries of presence</p>
                     </div>
                 </div>
+                
 
                 <div class="col-12 col-md-6 col-lg-3 py-4">
                     <div class="stat-wrap">
                         <h1 class="stat-value">35 000 000</h1>
+                        
                         <p class="stat-caption">Successful trades in the past week</p>
                     </div>
                 </div>
@@ -266,6 +268,7 @@
                         target="_blank"><span class="blue-text">Cryptocurrency Markets</span></a> by TradingView</div>
                 <script type="text/javascript"
                     src="https://s3.tradingview.com/external-embedding/embed-widget-screener.js" async>
+                    
                     {
                         "width": "100%",
                         "height": "100%",

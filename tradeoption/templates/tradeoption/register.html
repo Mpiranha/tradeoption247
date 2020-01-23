@@ -62,7 +62,14 @@
                 </form>
             </div> -->
         </nav>
-
+        <style>
+        .errorlist{
+            color: #ec4a4a;
+            list-style: none;
+            margin-top: 4px;
+            padding-left: 7px;
+        }
+        </style>
         <div class="container-fluid">
             <div class="row justify-content-center">
                 <div class="col-12 col-md-6 col-lg-4 py-4">
@@ -70,27 +77,79 @@
                         Sign Up
                     </h1>
                     <div class="form-wrap mt-5">
-                        <form class="login-form">
+                        <form class="login-form" method="POST">
                         {% csrf_token %}
-                        
+                      
+                        <!-- {% for error in r_form %}
+                            <p style="color: red">{{error.errors}}</p>                 
+                       {% endfor %}
+                    
+                         {% for error in t_form %}
+                             <p style="color: red">{{error.errors}}</p>                 
+                        {% endfor %} -->
+
                             <div class="form-group">
                                 
                                 <label for="email">Email</label>
-                                <input type="email" class="form-control py-4" id="email" aria-describedby="emailHelp"
-                                    placeholder="Email" value="">
+                                {{r_form.email}}
+                                
 
                             </div>
                             <div class="form-group">
-                                <label for="password">Password</label>
-                                <input type="password" class="form-control py-4" id="password" placeholder="Password"
-                                    value="">
+                                
+                                <label for="id_username">Username</label>
+                                {{r_form.username}}
+                                
+
                             </div>
                             <div class="form-group">
-                                <label for="verify-pwd">Confirm Password</label>
-                                <input type="password" class="form-control py-4" id="verify-pwd" placeholder="Password"
-                                    value="">
-                            </div>
+                                
+                                <label for="id_first_name">First Name</label>
+                                {{r_form.first_name}}
+                                
 
+                            </div>
+                            <div class="form-group">
+                                
+                                <label for="id_last_name">Last Name</label>
+                                {{r_form.last_name}}
+                                
+
+                            </div>
+                            <div class="form-group">
+                                <label for="id_password1">Password</label>
+                                {{r_form.password1}}
+                                {{r_form.password1.errors}}
+
+                            </div>
+                            <div class="form-group">
+                                <label for="id_password2">Confirm Password</label>
+                                {{r_form.password2}}
+                                {{r_form.password2.errors}}
+                                {{r_form.password2.help_text}}
+                            </div>
+                            <div class="form-group">
+                                
+                                <label for="id_country_id">Country</label>
+                                {{t_form.country_id}}
+                                {{t_form.country_id.errors}}
+
+                            </div>
+                            <div class="form-group">
+                                
+                                <label for="id_preferred_currency">Currency</label>
+                                {{t_form.preferred_currency}}
+                                {{t_form.preferred_currency.errors}}
+                                
+
+                            </div>
+                            <div class="form-group">
+                                
+                                <label for="id_phone">Phone</label>
+                                {{t_form.phone}}
+                                {{t_form.phone.errors}}
+
+                            </div>
                             <div class="password-desc">
                                 <span>Your password must contain</span>
                                 <ul>
@@ -103,7 +162,7 @@
                             
 
                             <div class="form-check accept-wrap my-4">
-                                <input type="checkbox" class="form-check-input " id="accept-terms">
+                                <input type="checkbox" class="form-check-input " id="accept-terms" name='tos' required>
                                 <label class="form-check-label" for="accept-terms">I accept the terms of the <a
                                         href="">the Client Agreement</a> and <a href="">Privacy Policy</a> and confirm that i am legally off age and fully competent</label>
                             </div>
